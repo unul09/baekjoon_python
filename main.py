@@ -1,16 +1,15 @@
-# 10610
-# 30의 배수 = 3의배수이면서 10의배수 = (각자릿수총합%3 ==0) and (일의자리수 0)
+# 1789
+# 1+...n < S < 1+...n+1 일때 n 구하기
 
-N = input()
-nums = []
-for i in range(len(N)):
-    nums.append(int(N[i]))
 
-nums.sort(reverse=True)
+S = int(input())
+N = 1
 
-if (sum(nums) % 3 != 0) or (nums[len(nums) - 1] != 0):
-    print(-1)
-    exit()
+while True:
+    if S < (N+1)*(N+2)/2:
+        break
+    N += 1
 
-for num in nums:
-    print(num, end='')
+print(N)
+
+
