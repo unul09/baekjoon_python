@@ -1,21 +1,17 @@
-# 1715
-'''
-자료구조 종류, 각각 동작원리와 시간복잡도 공부할것
-'''
-import heapq # 우선순위 큐
+# 1439
+import math
 
-N = int(input())
+S = input()
 
-cardList = list(int(input()) for _ in range(N))
-heapq.heapify(cardList)
-result=0
+lastS = S[0]
+cnt = 0
+for i in range(1, len(S)):
+    currentS = S[i]
+    if lastS != currentS:
+        cnt += 1
+    lastS = currentS
 
+cnt = int(math.ceil(cnt / 2))
 
-while len(cardList) != 1:
-    num1 = heapq.heappop(cardList)
-    num2 = heapq.heappop(cardList)
-    Sum = num1 + num2
-    result += Sum
-    heapq.heappush(cardList,Sum)
+print(cnt)
 
-print(result)
