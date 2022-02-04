@@ -1,15 +1,15 @@
-# 2217
+# 10162
 
-import sys
-data = []
-N = int(sys.stdin.readline())
-for i in range(N):
-    data.append(int(sys.stdin.readline()))
+T = int(input())
 
-data.sort()
-max = len(data) * data[0]
-for i in range(N):
-    if data[i] * (N - i) > max:
-        max = data[i] * (N - i)
+if T % 10 != 0:
+    print(-1)
+    exit()
 
-print(max)
+print(int(T / 300), end=' ')
+T = T % 300
+print(int(T / 60), end=' ')
+T = T % 60
+print(int(T / 10))
+
+
