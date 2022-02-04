@@ -1,33 +1,33 @@
-# 1946
-# 서류1등보다 면접등수가 같거나높은놈들 + 면접1등보다 서류등수가 같거나높은놈들 -> 둘의 교집합 XXXX
-# 위 방법으로 몇번 시도해봤는데 안됨.
-# 서류순으로 오름차순정렬, latest 합격자에 대하여
+# 1339
+'''
+유의사항 + 해결방안
+ABC + BCD
+100A + 110B + 10C + D
 
-#https://suhwanc.tistory.com/118 이새끼 미친새끼임... 사고의 흐름이 매우 체계적..!
-import sys
+처음에는 숫자.문자 매핑해서 하나하나 할당해주려 했는데
+그럴 시에 위에 경우에 잘못된 값을 답으로 내놓게 됨
+그러므로 그냥 수학적으로.!!! 접근하면.. 되는 것
+'''
+import math
+import operator
 
-T = int(input())
-for i in range(T):
-    data = []
-    N = int(input())
-    for j in range(N):
-        data.append(list(map(int, sys.stdin.readline().split())))
+N = int(input())
 
-    if len(data) == 1:
-        print(1)
-        continue
+coef = {}
+for _ in range(N):
+    word = input()
+    for i in range(len(word)):
+        if not (word[i] in coef):
+            coef[word[i]] = 0
+        coef[word[i]] += int(math.pow(10, len(word)-1 - i))
 
-    data.sort()
-    cnt = 1
-    latestOk = data[0][1]
-    for j in range(1, len(data)):
-        if data[j][1] < latestOk:
-            cnt += 1
-            latestOk = data[j][1]
+coef_new = sorted(coef.items(), key=operator.itemgetter(1), reverse=True)
 
-    print(cnt)
+sum = 0
+val = 9
+for i in coef_new:
+    sum += i[1] * val
+    val -= 1
 
-
-
-
+print(sum)
 
