@@ -1,28 +1,50 @@
-# 11047
+# 1931
 '''
-N: 동전의 종류
-K원을 만드는데 필요한 동전 개수의 최솟값을 출력
+N개의 회의
+각 회의 I에 대해 시작시간과 끝나는 시간이 주어진다
+
+88퍼센트까지 갔음
 '''
 
-N, K = map(int, input().split())
+N = int(input())
 
-coins = []
+meeting = []
 for i in range(N):
-    coins.append(int(input()))
+    startTime, endTime = map(int, input().split())
+    meeting.append([startTime, endTime])
 
-coins.reverse()
-currentCoin = 0
-total = 0
-while K != 0:
-    if K < coins[currentCoin]:
-        currentCoin += 1
+
+'''
+간과했던 점!!! 구글 검색으로 알아냄
+
+시작과 끝이 같을 수 있기 때문에 
+3 3 회의를 먼저 한다면 1 3 회의를 진행할 수 없지만 
+1 3 회의를 먼저 한다면 3 3 회의를 진행할 수 있겠죠?
+
+때문에 저희는 회의가 끝나는 시간을 우선순위로 먼저 정렬해준 뒤에 
+그 순서 내에서 시작시간을 정렬해주어야 한답니다.
+meeting.sort(key=lambda x: (x[1], x[0]))
+'''
+# 끝나는 시간 기준 오름차순 정렬
+meeting.sort(key=lambda x: (x[1], x[0]))
+
+
+clock = meeting[0][1]
+index = 1
+while True:
+
+    if index == len(meeting):
+        break
+    if meeting[index][0] < clock:
+        meeting.remove(meeting[index])
     else:
-        # 한번에 하나씩 빼주는건 시간 오래걸려서 시간초과 난다
-        # 나머지, 나누기 활용하여 한번에 뺄 수량 다 빼주기
-        total += int(K / coins[currentCoin])
-        K = K % coins[currentCoin]
+        clock = meeting[index][1]
+        index += 1
 
-print(total)
+
+
+print(len(meeting))
+
 
 
 
