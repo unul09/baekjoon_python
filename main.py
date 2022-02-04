@@ -1,14 +1,15 @@
-# 5585
+# 2217
 
-M = 1000 - int(input())
-coin = [500, 100, 50, 10, 5, 1]
-index = 0
-total = 0
-while M != 0:
-    if M >= coin[index]:
-        total += int(M / coin[index])
-        M = M % coin[index]
+import sys
+data = []
+N = int(sys.stdin.readline())
+for i in range(N):
+    data.append(int(sys.stdin.readline()))
 
-    index += 1
+data.sort()
+max = len(data) * data[0]
+for i in range(N):
+    if data[i] * (N - i) > max:
+        max = data[i] * (N - i)
 
-print(total)
+print(max)
