@@ -1,17 +1,21 @@
-# 1439
-import math
+# 4796
 
-S = input()
+caseCnt = 0
+while True:
+    caseCnt += 1
+    L, P, V = map(int, input().split())
+    if L == 0:
+        break
 
-lastS = S[0]
-cnt = 0
-for i in range(1, len(S)):
-    currentS = S[i]
-    if lastS != currentS:
-        cnt += 1
-    lastS = currentS
+    total = 0
+    total += L * (V//P)
+    V -= P * (V//P)
+    if V < L:
+        total += V
+    else:
+        total += L
 
-cnt = int(math.ceil(cnt / 2))
+    print("Case %d: %d" %(caseCnt, total))
 
-print(cnt)
+
 
