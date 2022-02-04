@@ -1,48 +1,34 @@
-# 1931
-'''
-N개의 회의
-각 회의 I에 대해 시작시간과 끝나는 시간이 주어진다
-'''
-
-N = int(input())
-
-meeting = []
-for i in range(N):
-    startTime, endTime = map(int, input().split())
-    meeting.append([startTime, endTime])
-
+# 1931 개선ver
 
 '''
-간과했던 점!!! 구글 검색으로 알아냄
-
-시작과 끝이 같을 수 있기 때문에 
-3 3 회의를 먼저 한다면 1 3 회의를 진행할 수 없지만 
-1 3 회의를 먼저 한다면 3 3 회의를 진행할 수 있겠죠?
-
-때문에 저희는 회의가 끝나는 시간을 우선순위로 먼저 정렬해준 뒤에 
-그 순서 내에서 시작시간을 정렬해주어야 한답니다.
-meeting.sort(key=lambda x: (x[1], x[0]))
+문제해결 설명
+데이터를 끝나는 시간 기준 내림차순, 끝나는 시간 같을경우에는 그 안에서 시작시간 내림차순 정렬
+첫번째 데이터의 끝나는 시간 둔상태에서 리스트 한번 쫙~ 훝으며
+적합한 회의라면(시작시간이 end time보다 크거나같다면) 회의수 카운트증가 + end time 갱신
 '''
-# 끝나는 시간 기준 오름차순 정렬
-meeting.sort(key=lambda x: (x[1], x[0]))
+
+'''
+반복문으로 여러줄 입력받는 상황에서는 
+반드시 sys.stdin.readline()을 사용해야 시간초과가 발생하지 않습니다.
+'''
+import sys
+input = sys.stdin.readline
+
+n = int(input())
+data = []
+for _ in range(n): # i 할당없이 단순 n번반복!
+    data.append(list(map(int,input().split()))) #list로 만들어서 넣어주기!
+
+data.sort(key=lambda x: (x[1], x[0]))
+
+end_t = data[0][1]
+cnt = 1
 
 
-clock = meeting[0][1]
-index = 1
-while True:
+#리스트 변형 없이 그저 한번 훝어보기!!!
+for i in range(1, n):  #두번째놈부터 볼거임
+    if data[i][0] >= end_t:
+        cnt += 1
+        end_t = data[i][1]
 
-    if index == len(meeting):
-        break
-    if meeting[index][0] < clock:
-        meeting.remove(meeting[index])
-    else:
-        clock = meeting[index][1]
-        index += 1
-
-
-
-print(len(meeting))
-
-
-
-
+print(cnt)
