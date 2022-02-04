@@ -1,21 +1,31 @@
-# 4796
+# 16953
 
-caseCnt = 0
+a, b = map(int, input().split())
+
+cnt = 1
+
 while True:
-    caseCnt += 1
-    L, P, V = map(int, input().split())
-    if L == 0:
+
+    if a == b:
         break
 
-    total = 0
-    total += L * (V//P)
-    V -= P * (V//P)
-    if V < L:
-        total += V
-    else:
-        total += L
+    if a > b:
+        print(-1)
+        exit()
 
-    print("Case %d: %d" %(caseCnt, total))
+    if b%2 == 0:
+        b = int(b/2)
+        cnt += 1
+    elif b%10 == 1:
+        b = int(b/10)
+        cnt += 1
+    else:
+        print(-1)
+        exit()
+
+print(cnt)
+
+
 
 
 
