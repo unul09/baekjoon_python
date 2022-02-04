@@ -1,15 +1,28 @@
-# 11399
+# 11047
+'''
+N: 동전의 종류
+K원을 만드는데 필요한 동전 개수의 최솟값을 출력
+'''
 
-N = int(input())
+N, K = map(int, input().split())
 
-P = []
-a = input().split()
+coins = []
 for i in range(N):
-    P.append(int(a[i]))
+    coins.append(int(input()))
 
-P.sort()
-minTime = 0
-for i in range(N):
-    minTime += (N-i) * P[i]
+coins.reverse()
+currentCoin = 0
+total = 0
+while K != 0:
+    if K < coins[currentCoin]:
+        currentCoin += 1
+    else:
+        # 한번에 하나씩 빼주는건 시간 오래걸려서 시간초과 난다
+        # 나머지, 나누기 활용하여 한번에 뺄 수량 다 빼주기
+        total += int(K / coins[currentCoin])
+        K = K % coins[currentCoin]
 
-print(minTime)
+print(total)
+
+
+
