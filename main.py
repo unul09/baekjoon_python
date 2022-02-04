@@ -1,34 +1,19 @@
-# 1541
+# 1541 개선ver
 """
 식이 주어진다. 식은 ‘0’~‘9’, ‘+’, 그리고 ‘-’만으로 이루어져 있음
 
+마이너스 기호 만나기 전, 후로 나누어
+전의 수는 더하기로 처리
+후의 수는 빼기로 처리
 """
-import re
-exp = input()
-
-numbers = re.findall(r'\d+', exp)
-chars = re.sub(r'[0-9]+', '', exp)
-
-ans = int(numbers[0])
-
-if len(numbers) == 1:
-    print(ans)
-    exit()
-
-# 마이너스가 하나라도 나오는 순간부터 그 위는 다 마이너스로 처리 가능
-minus_Flag = False
-for i in range(len(chars)):
-    if chars[i] == '-':
-        minus_Flag = True
-
-    if minus_Flag:
-        ans -= int(numbers[i+1])
-    else:
-        ans += int(numbers[i+1])
-
-
-print(ans)
-
+arr = input().split('-')
+s = 0
+for i in arr[0].split('+'):
+    s += int(i)
+for i in arr[1:]:
+    for j in i.split('+'):
+        s -= int(j)
+print(s)
 
 
 
