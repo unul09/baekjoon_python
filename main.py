@@ -1,32 +1,42 @@
 # 1202
+'''
+<스스로 작성 개요>
+sys.stdin.readline()
+리스트 = [list() for _ in range()]
+오름차순 정렬 후, 결과와 temp 리스트 생성
+가장 가벼운 가방부터 돌 것.
+가방한도 내에서 최대가치까지 돌릴거야. 가치를 음수로 만들어서 최대 음수(최대 가치)가 될때까지 넣.빼 할거
+가방에 보석이 담겼다면 그것은 최적의 보석. result에 넣기 / 없다면 충족보석 없으므로 패스
+가방보다 보석이 먼저 소진될경우 끝내기
+
+<포인트>
+무게에 대한 것은 오름차순, 가격에 대한 것은 내림차순으로 처리 -> 내림차순: 우선순위힙을 max값 받아오는 식으로 변경
+낮은 무게에서 여러개가 필요하게 되는 조건 충족시키기 -> temp 활용하여 우선순위힙에 돌릴 값 넣어두기
+'''
+
 import heapq
 import sys
 
 N, K = map(int, sys.stdin.readline().split())
 
-jewelryList = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
-bagList = [int(sys.stdin.readline()) for _ in range(K)]
+gems = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
+bags = [int(sys.stdin.readline()) for _ in range(K)]
 
-# 보석, 가방 오름차순 정렬
-jewelryList.sort()
-bagList.sort()
+gems.sort()
+bags.sort()
 
-# 우선순위힙 사용하여 result에 음수값으로 첨가해줄 것.
-# 일시적 보석보관 장소 및 보석보관 확인용으로 temp리스트 쓸것.
 result = 0
 temp = []
 
-
-for bagWeight in bagList:   # 가장 가벼운 가방부터, 보석보다 가방이 먼저 소진될경우 끝내기
-    while jewelryList and bagWeight >= jewelryList[0][0]: # 가방한도 내에서 최대가치까지 돌릴거야
-        # 가치를 음수로 만들어서 최대 음수(최대 가치)가 될때까지 넣.빼 할거
-        heapq.heappush(temp, -jewelryList[0][1])  # Max heap
-        heapq.heappop(jewelryList)
+for bag in bags:
+    while gems and bag >= gems[0][0]:
+        heapq.heappush(temp, -gems[0][1])
+        heapq.heappop(gems)
 
     if temp:
-        # 가방에 보석이 담겼다면 그것은 최적의 보석. result에 넣기 / 없다면 충족보석 없으므로 패스
         result += heapq.heappop(temp)
-    elif not jewelryList: #가방보다 보석이 먼저 소진될경우 끝내기
+
+    elif not gems:
         break
 
 print(-result)
