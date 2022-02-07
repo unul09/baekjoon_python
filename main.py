@@ -1,38 +1,29 @@
-# 1744
+# 1049
 
-# 요소를 이득인거 순으로 다 제거해주며 리스트 비운다.
+# (필요개수/6 올림) X 세트최저가,
+# (필요개수/6 내림) X 세트최저가 + 나머지개수 X 단일최저가,
+# 필요개수 X 단일최저가 비교, 작은값 출력
 
-N = int(input())
-nums = [int(input()) for _ in range(N)]
-nums.sort()
+N, M = map(int, input().split())
+price = [list(map(int, input().split())) for _ in range(M)]
 
-total = 0
-index = 0
-while len(nums) > 1:
-    # 앞뒤로 살펴서 더 이득인쪽 먼저 해줄거임. 같을시엔 앞부터(왜냐? 그냥 이 식은 애초에 앞에서부터 하는걸 전제로 짰으니까 ...)
-    n = len(nums)-2
-    if nums[0] * nums[1] >= nums[n] * nums[n+1]:
-        n = 0
-    sum = nums[n] + nums[n+1]
-    mul = nums[n] * nums[n+1]
-    if mul >= sum: # 곱 더해주는게 더 이득
-        total += mul
-        nums.pop(n)
-        nums.pop(n)
-    else: # 합 더해주는게 더 이득
-        if len(nums) % 2 == 1: # 홀수길이 놈이면 앞쪽 빼서 처리
-            total += nums.pop(n)
-        else:
-            total += sum
-            nums.pop(n)
-            nums.pop(n)
+setmin = price[0][0]
+for i in range(M):
+    if price[i][0] < setmin:
+        setmin = price[i][0]
 
-# 마지막 한개 안빠져있는 경우 있기에 추가
-if len(nums) == 1:
-    total += nums.pop(0)
+onemin = price[0][1]
+for i in range(M):
+    if price[i][1] < onemin:
+        onemin = price[i][1]
 
+import math
+a = math.ceil(N / 6) * setmin
+b = math.floor(N / 6) * setmin + (N % 6) * onemin
+c = onemin * N
 
-print(total)
+print(min(a, b, c))
+
 
 
 
