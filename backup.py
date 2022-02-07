@@ -1,31 +1,34 @@
-words = []
-words_int = []
+
+
 N = int(input())
-for _ in range(N):
-    words.append(input())
-    words_int.append("")
+nums = [int(input()) for _ in range(N)]
 
-words.sort(key=lambda x: len(x), reverse=True)
+total = 0
 
-for i in range(1, N):
-    for j in range (len(words[0]) - len(words[i])):
-        words[i] = ' ' + words[i]
+nums.sort()
 
-alphaMap = {}
-val = 9
+if N % 2 == 1 and (nums[0] > 1 or nums[N-1] < 0):
+    if nums[0] > 1:
+        total += nums[0]
+        nums.remove(nums[0])
+    else:
+        total += nums[N-1]
+        nums.remove(nums[N-1])
 
-for i in range(len(words[0])):
-    for j in range(N):
-        if words[j][i] == ' ':
-            continue
-        if not (words[j][i] in alphaMap):
-            alphaMap[words[j][i]] = val;
-            val -= 1
-        words_int[j] += str(alphaMap[words[j][i]])
+for i in range(int(N / 2)):
+    n1 = 2*i
+    n2 = 2*i+1
+    if (nums[n1] < 0 and nums[n2] <= 0) or (nums[n1] > 1 and nums[n2] > 1):
+        total += nums[n1] * nums[n2]
+    else:
+        if N % 2 == 1:
+            total += nums[n1]
+            nums.remove(nums[n1])
+        else:
+            total += nums[n1] + nums[n2]
+
+if N % 2 == 1:
+    total += nums[len(nums)-1]
 
 
-sum = 0
-for i in words_int:
-    sum += int(i)
-
-print(sum)
+print(total)

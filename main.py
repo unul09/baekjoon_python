@@ -1,42 +1,38 @@
-# 1202
-'''
-<스스로 작성 개요>
-sys.stdin.readline()
-리스트 = [list() for _ in range()]
-오름차순 정렬 후, 결과와 temp 리스트 생성
-가장 가벼운 가방부터 돌 것.
-가방한도 내에서 최대가치까지 돌릴거야. 가치를 음수로 만들어서 최대 음수(최대 가치)가 될때까지 넣.빼 할거
-가방에 보석이 담겼다면 그것은 최적의 보석. result에 넣기 / 없다면 충족보석 없으므로 패스
-가방보다 보석이 먼저 소진될경우 끝내기
+# 1744
 
-<포인트>
-무게에 대한 것은 오름차순, 가격에 대한 것은 내림차순으로 처리 -> 내림차순: 우선순위힙을 max값 받아오는 식으로 변경
-낮은 무게에서 여러개가 필요하게 되는 조건 충족시키기 -> temp 활용하여 우선순위힙에 돌릴 값 넣어두기
-'''
+# 요소를 이득인거 순으로 다 제거해주며 리스트 비운다.
 
-import heapq
-import sys
+N = int(input())
+nums = [int(input()) for _ in range(N)]
+nums.sort()
 
-N, K = map(int, sys.stdin.readline().split())
+total = 0
+index = 0
+while len(nums) > 1:
+    # 앞뒤로 살펴서 더 이득인쪽 먼저 해줄거임. 같을시엔 앞부터(왜냐? 그냥 이 식은 애초에 앞에서부터 하는걸 전제로 짰으니까 ...)
+    n = len(nums)-2
+    if nums[0] * nums[1] >= nums[n] * nums[n+1]:
+        n = 0
+    sum = nums[n] + nums[n+1]
+    mul = nums[n] * nums[n+1]
+    if mul >= sum: # 곱 더해주는게 더 이득
+        total += mul
+        nums.pop(n)
+        nums.pop(n)
+    else: # 합 더해주는게 더 이득
+        if len(nums) % 2 == 1: # 홀수길이 놈이면 앞쪽 빼서 처리
+            total += nums.pop(n)
+        else:
+            total += sum
+            nums.pop(n)
+            nums.pop(n)
 
-gems = [list(map(int, sys.stdin.readline().split())) for _ in range(N)]
-bags = [int(sys.stdin.readline()) for _ in range(K)]
+# 마지막 한개 안빠져있는 경우 있기에 추가
+if len(nums) == 1:
+    total += nums.pop(0)
 
-gems.sort()
-bags.sort()
 
-result = 0
-temp = []
+print(total)
 
-for bag in bags:
-    while gems and bag >= gems[0][0]:
-        heapq.heappush(temp, -gems[0][1])
-        heapq.heappop(gems)
 
-    if temp:
-        result += heapq.heappop(temp)
 
-    elif not gems:
-        break
-
-print(-result)
