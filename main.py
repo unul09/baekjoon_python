@@ -1,11 +1,7 @@
-# 4153
+# 3053
+import math
 
-while True:
-    tri = list(map(int, input().split()))
-    if tri[0] == 0: exit()
-    tri.sort()
+n = int(input())
 
-    if tri[0]**2 + tri[1]**2 == tri[2]**2:
-        print('right')
-    else:
-        print('wrong')
+print(f'{n*n*math.pi:.6f}')
+print(f'{n*n*2:.6f}')
