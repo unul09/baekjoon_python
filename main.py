@@ -1,13 +1,25 @@
-# 2480
+# 9020
+import math
 
-dice = list(map(int, input().split()))
-dice.sort()
 
-if dice[0] == dice[1] and dice[1] == dice[2]:
-    total = 10000 + dice[0]*1000
-elif dice[0] == dice[1] or dice[1] == dice[2]:
-    total = 1000 + dice[1]*100
-else:
-    total = dice[2]*100
+def isPrime(n):
+    if n <= 3: return True
+    for i in range(2, math.floor(math.sqrt(n)) + 1):
+        if n % i == 0: return False
+    return True
 
-print(total)
+
+T = int(input())
+for _ in range(0, T):
+    n = int(input())
+    p1 = int(n / 2)
+    p2 = n - p1
+
+    while (not isPrime(p1)) or (not isPrime(p2)):
+        p1 -= 1
+        p2 += 1
+
+    print(p1, p2)
+
+
+
