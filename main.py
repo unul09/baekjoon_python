@@ -1,6 +1,16 @@
-# 1543
+# 2525
 
-text = input()
-find = input()
+A, B = map(int, input().split())
+C = int(input())
 
-print(len(text.split(find))-1)
+H = A
+M = B+C
+
+while M >= 60:
+    M -= 60
+    H += 1
+
+    if H >= 24:
+        H -= 24
+
+print(H, M)
