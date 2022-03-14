@@ -1,23 +1,11 @@
-# 3009
+# 4153
 
-x = []
-y = []
-for _ in range(0, 3):
-    px, py = map(int, input().split())
-    x.append(px)
-    y.append(py)
+while True:
+    tri = list(map(int, input().split()))
+    if tri[0] == 0: exit()
+    tri.sort()
 
-x.sort()
-y.sort()
-
-if x[0] == x[1]:
-    px = x[2]
-else:
-    px = x[0]
-
-if y[0] == y[1]:
-    py = y[2]
-else:
-    py = y[0]
-
-print(px, py)
+    if tri[0]**2 + tri[1]**2 == tri[2]**2:
+        print('right')
+    else:
+        print('wrong')
