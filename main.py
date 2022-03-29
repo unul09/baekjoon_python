@@ -1,18 +1,26 @@
-# 7568
+# 1018
 
-N = int(input())
-rank = []
+standard_chessboard = []
+for i in range(8):
+    if i % 2 == 0:
+        standard_chessboard.append(list('WBWBWBWB'))
+    else:
+        standard_chessboard.append(list('BWBWBWBW'))
+
+N, M = map(int, input().split())
+board = []
 for _ in range(N):
-    rank.append(list(map(int, input().split())))
+    board.append(list(input()))
 
-result = []
+color_min = 64
+for i in range(N-7):
+    for j in range(M-7):
+        cnt = 0
+        for a in range(8):
+            for b in range(8):
+                if board[i+a][j+b] != standard_chessboard[a][b]:
+                    cnt += 1
+        if cnt > 32: cnt = 64 - cnt
+        if color_min > cnt: color_min = cnt
 
-for current in rank:
-    personal_rank = 1
-    for compare in rank:
-        if current[0]<compare[0] and current[1]<compare[1]:
-            personal_rank += 1
-    result.append(personal_rank)
-
-
-print(' '.join(map(str, result)))
+print(color_min)
