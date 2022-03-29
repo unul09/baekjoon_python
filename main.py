@@ -1,33 +1,23 @@
-# 2447 (나중에 다시)
-# 출처 https://cotak.tistory.com/38
+# 2798
 
-def paint_star(LEN):
-    DIV3 = LEN//3
+import itertools
 
-    if LEN == 3:    # LEN이 3까지 쪼개졌을 때 아래 값 넣는다
-        g[1] = ['*', ' ', '*']
-        g[0][:3] = g[2][:3] = ['*']*3
-        return  # 전의 재귀함수으로 탈출
+N, M = map(int, input().split())
+cards = list(map(int, input().split()))
 
-    paint_star(DIV3)    # 재귀
+cards_3 = list(itertools.combinations(cards, 3))
+card_sums = list(sum(card_sum) for card_sum in cards_3)
 
-    for i in range(0, LEN, DIV3):   # 3개 영역
-        for j in range(0, LEN, DIV3):   # 3개 영역
-            if i == DIV3 and j == DIV3:    # 가운데 영역이면 패스
-                continue
-            for k in range(DIV3):   # 가운데 영역 아니라면
-                g[i+k][j:j+DIV3] = g[k][:DIV3]  # 그 영역을 0,0 영역과 복사해서 채우기
+card_sums.sort()
+for i in range(len(card_sums)):
+    if card_sums[i] > M: # 초과하는 인덱스 바로 전의 값을 출력
+        if i == 0: # 첫번째부터 초과할 경우, 첫번째가 출력되도록
+            i += 1
+        print(card_sums[i-1])
+        exit()
+    if i == len(card_sums)-1: # 마지막까지 M보다 작을 경우
+        print(card_sums[i])
+        exit()
 
 
-n = int(input())
 
-# 공백으로 채워진 n*n 크기 배열 생성
-g = [[' ' for _ in range(n)] for _ in range(n)]
-
-paint_star(n)
-
-# 출력
-for i in range(n):
-    for j in range(n):
-        print(g[i][j], end='')
-    print()
