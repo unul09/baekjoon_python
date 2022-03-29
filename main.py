@@ -1,20 +1,18 @@
-# 2231
+# 7568
 
 N = int(input())
+rank = []
+for _ in range(N):
+    rank.append(list(map(int, input().split())))
 
-if N < 20:
-    min = 1
-else:
-    min = N - len(str(N)) * 9
+result = []
 
-
-for i in range(min, N + 1):
-    result = i + sum(list(map(int, str(i))))
-
-    if result == N:
-        print(i)
-        exit()
-
-print(0)
+for current in rank:
+    personal_rank = 1
+    for compare in rank:
+        if current[0]<compare[0] and current[1]<compare[1]:
+            personal_rank += 1
+    result.append(personal_rank)
 
 
+print(' '.join(map(str, result)))
