@@ -1,15 +1,11 @@
-# 1436
+# 2750
 
 N = int(input())
+nums = []
+for _ in range(N):
+    nums.append(int(input()))
 
-cnt = 0
-i = 666
+nums.sort()
+nums_result = '\n'.join(map(str, nums))
 
-while True:
-    if '666' in str(i):
-        cnt += 1
-    if cnt == N:
-        print(i)
-        exit()
-    else:
-        i += 1
+print(nums_result)
