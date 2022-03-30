@@ -1,11 +1,15 @@
-# 2750
+# 10989
+import sys
 
-N = int(input())
-nums = []
+num_counts = [0 for i in range(10001)]
+
+N = int(sys.stdin.readline())
 for _ in range(N):
-    nums.append(int(input()))
+    num_counts[int(sys.stdin.readline())] += 1
 
-nums.sort()
-nums_result = '\n'.join(map(str, nums))
-
-print(nums_result)
+for i in range(10001):
+    if num_counts[i] == 0:
+        continue
+    else:
+        for j in range(num_counts[i]):
+            print(i)
