@@ -1,15 +1,33 @@
-# 10989
-import sys
+# 1074
+N, r, c = map(int, input().split())
 
-num_counts = [0 for i in range(10001)]
+start = 0
+end = 4**N
 
-N = int(sys.stdin.readline())
-for _ in range(N):
-    num_counts[int(sys.stdin.readline())] += 1
 
-for i in range(10001):
-    if num_counts[i] == 0:
-        continue
+while N > 0:
+    boundery_size = (end-start)//4 # 4분할 크기
+    # 범위 4개중 하나로 좁히는 과정의 반복
+    if r < 2 ** (N - 1):
+        if c < 2 ** (N - 1):
+            end = start + boundery_size
+        else:
+            end = start + boundery_size * 2
+            start = start + boundery_size
+
+            c -= 2**(N-1) # 인덱스 스타팅포인트 범위 맞추어 수정
     else:
-        for j in range(num_counts[i]):
-            print(i)
+        r -= 2 ** (N - 1)
+        if c < 2 ** (N - 1):
+            end = start + boundery_size * 3
+            start = start + boundery_size * 2
+
+        else:
+            start = start + boundery_size * 3
+            c -= 2 ** (N - 1)
+
+    N -= 1
+
+
+print(start)
+
